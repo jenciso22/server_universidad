@@ -16,6 +16,10 @@ app.post("/api/usuarios",
     usuarioController.crearUsuario
 );
 
+app.get("/api/usuarios/alum", usuarioController.obteneralumnos);
+
+app.get("/api/usuarios/mtrs", usuarioController.obtenermtrs);
+
 app.get("/api/usuarios", usuarioController.obtenerUsuarios);
 
 app.get("/api/usuarios/:id", usuarioController.obtenerUsuarioId);
@@ -31,5 +35,15 @@ app.put("/api/usuarios/:id",
 );
 
 app.delete("/api/usuarios/:id", usuarioController.deleteUsuario);
+
+
+/*Actualizacion de estudios escolar y profesion*/
+app.put("/api/usuarios/escolar/:id", 
+    usuarioController.putEscolar
+);
+app.put("/api/usuarios/profesion/:id", 
+    usuarioController.putProfesion
+);
+
 
 module.exports = app;

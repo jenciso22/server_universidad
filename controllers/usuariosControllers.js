@@ -61,11 +61,44 @@ exports.obtenerUsuarios = async (req, res) => {
     }
 }
 
+exports.obteneralumnos = async (req, res) => {
+    try {
+        const pool = await getConnection();
+        const result = await pool.request().query(querys.MostrarUsuariosTipoALUM);
+        res.json({
+            ok: true, 
+            result: result.recordset
+        });
+    } catch (error) {
+        res.status(400).json({
+            ok: false,
+            msg: "Ocurrio un error contacte con un administrador"
+        });
+    }
+}
+
+exports.obtenermtrs = async (req, res) => {
+    try {
+        const pool = await getConnection();
+        const result = await pool.request().query(querys.MostrarUsuariosTipoMTRS);
+        res.json({
+            ok: true, 
+            result: result.recordset
+        });
+    } catch (error) {
+        res.status(400).json({
+            ok: false,
+            msg: "Ocurrio un error contacte con un administrador"
+        });
+    }
+}
+
+
 exports.obtenerUsuarioId = async (req, res) => {
     const idUsuario = req.params.id;
     try {
         const pool = await getConnection();
-        const result = await pool.request().input("idUsuario", idUsuario).query(querys.getUsuariosId);
+        const result = await pool.request().input("idUsuario", idUsuario).query(querys.getUsuariosIdGlobal);
 
         if( result.recordset.length === 0){
             return res.status(400).json({
@@ -104,7 +137,6 @@ exports.deleteUsuario = async (req, res) => {
             msg: "Ocurrio un error contacte con un administrador"
         })
     }
-
 }
 
 exports.putUsuario = async (req, res) => {
@@ -136,5 +168,57 @@ exports.putUsuario = async (req, res) => {
             msg: "Ocurrio un error contacte con un administrador"
         })
     }
+}
 
+/*Actualizar escolar y profesion*/
+exports.putEscolar = async (req, res) => {
+    const idEscolar = req.params.id;
+    const { matricula, maestria, cuatrimestre, areasInvestigacion, nombreProyecto, asesorProyecto, descripcionProyecto  } = req.body;
+    try {
+        const pool = await getConnection();
+        const result = await pool.request()
+            .input("matricula", sql.VarChar, matricula)
+            .input("maestria", sql.VarChar, maestria)
+            .input("cuatrimestre", cuatrimestre)
+            .input("areasInvestigacion", sql.VarChar , areasInvestigacion)
+            .input("nombreProyecto", sql.VarChar, nombreProyecto)
+            .input("asesorProyecto", sql.VarChar, asesorProyecto)
+            .input("descripcionProyecto", sql.VarChar, descripcionProyecto)
+            .input("idEscolar", idEscolar)
+            .query(querys.updateEscolarById);
+
+            res.json({
+                ok: true,
+                msg: "Informacion actualizada correctamente"
+           });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({
+            ok: false,
+            msg: "Ocurrio un error contacte con un administrador"
+        })
+    }
+}
+
+exports.putProfesion = async (req, res) => {
+    const idProfesion = req.params.id;
+    const { experienciaProfesional, proyectosProfesionales } = req.body;
+    try {
+        const pool = await getConnection();
+        const result = await pool.request()
+            .input("experienciaProfesional", sql.VarChar, experienciaProfesional)
+            .input("proyectosProfesionales", sql.VarChar, proyectosProfesionales)
+            .input("idProfesion", idProfesion)
+            .query(querys.updateProfesionById);
+
+            res.json({
+                ok: true,
+                msg: "Información actualizado correctamente"
+           });
+    } catch (error) {
+        res.status(400).json({
+            ok: false,
+            msg: "Ocurrio un error contacte con un administrador"
+        })
+    }
 }
