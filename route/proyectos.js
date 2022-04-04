@@ -22,9 +22,9 @@ app.post("/api/proyectos",
 app.get("/api/proyectos", proyectosControllers.getProyectos); 
 
 app.get("/api/proyectos/mtrs/:id", proyectosControllers.getProyectosMaestros);
+app.get("/api/proyectos/alum/:id", proyectosControllers.getProyectosAlumno)
 
-
-app.put("/api/proyectos/:id", 
+app.put("/api/proyectos/:id",
     [
         check("idUsuario", "Se requiere el ID del Maestro").not().isEmpty(),
         check("nombre", "Se requiere un nombre para el proyecto").not().isEmpty(),
@@ -41,3 +41,14 @@ app.put("/api/proyectos/:id",
 app.delete("/api/proyectos/:id/:idUsuario", proyectosControllers.deleteProyecto);
 
 module.exports = app;
+
+// [
+//     check("idUsuario", "Se requiere el ID del Maestro").not().isEmpty(),
+//     check("nombre", "Se requiere un nombre para el proyecto").not().isEmpty(),
+//     check("descripcion", "Se requiere una descripcion para el proyecto").not().isEmpty(),
+//     check("areaInvestigacion", "Indica el area que corresponde a dicha aplicación").not().isEmpty(),
+//     check("vacante", "Agrega un nombre para la vacante solicitada").not().isEmpty(),
+//     check("fechaInicio", "Agrega la fecha en que iniciara la vacante").isDate(),
+//     check("fechaFinal", "Agrega la fecha en la que culmina el proyecto").isDate(),
+//     validarCampo
+// ],

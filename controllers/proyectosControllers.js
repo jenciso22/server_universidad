@@ -38,7 +38,6 @@ exports.putProyecto = async (req, res) => {
 
     try {
         const pool = await getConnection();
-
         const result = await pool
         .request()
         .input("idProyecto", sql.Int, idProyecto)
@@ -53,12 +52,15 @@ exports.putProyecto = async (req, res) => {
 
         res.json({
              ok: true,
-             msg: "Proyecto actualizado correctamente"
+             msg: "Proyecto actualizado correctamente",
+             result
         });
     } catch (error) {
+        console.log(error);
         res.status(400).json({
             ok:false,
-            msg: "Error en la aplicacion"
+            msg: "Error en la aplicacion",
+            result
         });
     }
 }
@@ -117,4 +119,21 @@ exports.getProyectosMaestros = async (req, res) => {
              msg: "Ocurrio un error contacte con un administrador"
          });
     }
+}
+
+exports.getProyectosAlumno = async (req, res) => {
+    const idUsuario = req.params.id;
+    try {
+        const pool = await getConnection();
+        const result = await pool.request().input("idUsuario", idUsuario).query(querys.obtenerProyectosEnLoQueNoestaesealumno);
+        res.json({
+            ok: true, 
+            result: result.recordset
+        });
+   } catch (error) {
+        res.status(400).json({
+            ok: false,
+            msg: "Ocurrio un error contacte con un administrador"
+        });
+   }
 }

@@ -26,13 +26,13 @@ app.put("/api/solicitar",
     solicitarControllers.editarSolicitud
 );
 
-app.delete("/api/solicitar", 
-    [
-        check("idUsuario", "El id del usuario es obligatorio").not().isEmpty(),
-        check("idProyecto", "El id del proyecto es obligatorio").not().isEmpty(),
-        check("idSolicitar", "El id del la solicitud es obligatorio").not().isEmpty(),
-        validarCampo
-    ],
+app.delete("/api/solicitar/:idUsuario/:idProyecto/:idSolicitar", 
+    // [
+    //     check("idUsuario", "El id del usuario es obligatorio").not().isEmpty(),
+    //     check("idProyecto", "El id del proyecto es obligatorio").not().isEmpty(),
+    //     check("idSolicitar", "El id del la solicitud es obligatorio").not().isEmpty(),
+    //     validarCampo
+    // ],
     solicitarControllers.eliminarSolicitud
 );
 

@@ -55,7 +55,7 @@ exports.editarSolicitud = async (req, res) => {
 }
 
 exports.eliminarSolicitud = async (req, res) => {
-    const {idUsuario, idProyecto, idSolicitar} = req.body;
+    const {idUsuario, idProyecto, idSolicitar} = req.params;
 
     try {
         const pool = await getConnection();
@@ -64,7 +64,6 @@ exports.eliminarSolicitud = async (req, res) => {
         .input("idProyecto", idProyecto)
         .input("idSolicitar", idSolicitar)
         .query(querys.eliminarSolicitud);
-        
         res.json({
             ok: true,
             result: result.recordset
