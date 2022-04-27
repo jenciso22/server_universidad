@@ -13,6 +13,7 @@
 ### `Configure the DB.JS file`
 
   - As user you need to configure the file db.js with your information related to the data of your local database.
+  - Before this point you need to install the database on your local.
 
 ### `nodemon serve/serve`
 
